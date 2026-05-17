@@ -1,5 +1,5 @@
 # ED-Projeto
 
 ## Membros
-### > João Vitor
-### > João Gabriel
+### >João Vitor
+### >João Gabriel
