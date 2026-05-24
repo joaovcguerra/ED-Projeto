@@ -73,3 +73,59 @@ int buscaHash(Hash h, char *user, char *pass) {
     return 1;
 }
 
+int removeHash(Hash h, char *user) {
+    if (h == NULL) return 1;
+
+    int pos = valorString(user) % TABLE_SIZE;
+    Elem *aux = h->tabela[pos];
+    Elem *ant = NULL;
+
+    while (aux != NULL) {
+        if (strcmp(aux->username, user) == 0) {
+            if (ant == NULL) {
+                h->tabela[pos] = aux->prox;
+            } else {
+                ant->prox = aux->prox;
+            }
+            free(aux);
+            printf("\nUsuario '%s' removido!\n", user);
+            return 0;
+        }
+        ant = aux;
+        aux = aux->prox;
+    }
+    printf("\nUsuario nao encontrado.\n");
+    return 1;
+}
+
+void imprimeHash(Hash h) {
+    if (h == NULL) return;
+
+    printf("\n--- TABELA HASH ---\n");
+    for(int i = 0; i < TABLE_SIZE; i++) {
+        printf("[%d]: ", i);
+        Elem *aux = h->tabela[i];
+
+        while(aux != NULL) {
+            printf("{%s, hash:%ld} -> ", aux->username, aux->hash_senha);
+            aux = aux->prox;
+        }
+        printf("NULL\n");
+    }
+    printf("-------------------\n");
+}
+
+void liberaHash(Hash h) {
+    if (h != NULL) {
+        for(int i = 0; i < TABLE_SIZE; i++) {
+            Elem *no = h->tabela[i];
+            while (no != NULL) {
+                Elem *prox = no->prox;
+                free(no);
+                no = prox;
+            }
+        }
+        free(h->tabela);
+        free(h);
+    }
+}
