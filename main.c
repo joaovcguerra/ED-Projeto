@@ -34,7 +34,7 @@ Hash criaHash() {
     return h;
 }
 
-int insereHash(Hash h, char *user, char *pass) {
+int insereHash(Hash h, char *user, char *senha) {
     if (h == NULL) return 1;
 
     int pos = valorString(user) % TABLE_SIZE;
@@ -42,7 +42,7 @@ int insereHash(Hash h, char *user, char *pass) {
     Elem *no = malloc(sizeof(Elem));
     if (no != NULL) {
         strcpy(no->username, user);
-        no->hash_senha = valorString(pass);
+        no->hash_senha = valorString(senha);
 
         no->prox = h->tabela[pos];
         h->tabela[pos] = no;
@@ -53,12 +53,12 @@ int insereHash(Hash h, char *user, char *pass) {
     return 1;
 }
 
-int buscaHash(Hash h, char *user, char *pass) {
+int buscaHash(Hash h, char *user, char *senha) {
     if (h == NULL) return 1;
 
     int pos = valorString(user) % TABLE_SIZE;
     Elem *aux = h->tabela[pos];
-    long senhaDigitada = valorString(pass);
+    long senhaDigitada = valorString(senha);
 
     while (aux != NULL) {
         if (strcmp(aux->username, user) == 0) {
@@ -128,4 +128,49 @@ void liberaHash(Hash h) {
         free(h->tabela);
         free(h);
     }
+}
+
+int main() {
+    Hash tabela = criaHash();
+    int op;
+    char user[50];
+    char senha[50];
+
+    do {
+        printf("\n1. Cadastrar | 2. Login | 3. Remover | 4. Imprimir | 0. Sair\n");
+        printf("Opcao: ");
+        scanf("%d", &op);
+
+        if(op == 1) {
+            printf("Nome: ");
+            scanf("%s", user);
+            printf("Senha: ");
+            scanf("%s", senha);
+            insereHash(tabela, user, senha);
+        }
+        else if(op == 2) {
+            printf("Nome: ");
+            scanf("%s", user);
+            printf("Senha: ");
+            scanf("%s", senha);
+
+            if(buscaHash(tabela, user, senha) == 0) {
+                printf("\n>>> Login OK!\n");
+            } else {
+                printf("\n>>> Falha no login!\n");
+            }
+        }
+        else if(op == 3) {
+            printf("Nome para remover: ");
+            scanf("%s", user);
+            removeHash(tabela, user);
+        }
+        else if(op == 4) {
+            imprimeHash(tabela);
+        }
+
+    } while(op != 0);
+
+    liberaHash(tabela);
+    return 0;
 }
