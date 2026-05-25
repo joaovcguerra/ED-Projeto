@@ -10,7 +10,6 @@
 O projeto é composto por um único arquivo fonte principal (`main.c`) e não possui dependências externas.
 
 ### Opção 1: Via CLion
-O Projeto foi feito inteiramente através do Clion (IDE da Jetbrains).
 
 1. Abra a pasta do projeto diretamente no CLion.
 2. Certifique-se de que o arquivo `CMakeLists.txt` na raiz do projeto contenha o seguinte formato (atenção ao nome `main.c` em minúsculo):
@@ -28,7 +27,6 @@ O Projeto foi feito inteiramente através do Clion (IDE da Jetbrains).
 
 
 ### Opção 2: Via VS Code / Terminal
-Não utilizamos o VsCode na hora de desenvolver o projeto, então rodar por ele não é o recomendado.
 
 1. Abra a pasta do projeto no VS Code.
 2. Abra um novo Terminal (`Ctrl + '` ou `Terminal > New Terminal`).
